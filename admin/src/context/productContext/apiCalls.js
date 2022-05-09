@@ -15,7 +15,7 @@ import {
 } from "./ProductActions"
 import axios from 'axios'
 
-//GET movies
+//GET products
 export const getProducts = async (dispatch) => {
     dispatch(getProductsStart())
     try {
@@ -25,7 +25,7 @@ export const getProducts = async (dispatch) => {
         },
       })
       console.log('Done')
-      dispatch(getProductsSuccess(res.data))
+      dispatch(getProductsSuccess(res.data.payload))
     } catch (err) {
       dispatch(getProductsFailure())
     }
@@ -56,8 +56,8 @@ export const createProduct = async (product, dispatch) => {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     })
-    alert("Thêm sản phẩm "+ res.data.title +" thành công!")
-    dispatch(createProductSuccess(res.data))
+    alert(res.data.message)
+    dispatch(createProductSuccess(res.payload.data))
   } catch (err) {
     dispatch(createProductFailure())
   }

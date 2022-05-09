@@ -10,14 +10,14 @@ const WidgetLg = () => {
 
     return (
         <div className="widgetLg">
-            <h3 className="widgetLgTitle">Latest transactions</h3>
+            <h3 className="widgetLgTitle">Giao dich gần nhất</h3>
             <table className="widgetLgTable">
                 <tbody>
                     <tr className="widgetLgTr">
-                        <th className="widgetLgTh">Customer</th>
-                        <th className="widgetLgTh">Date</th>
-                        <th className="widgetLgTh">Amount</th>
-                        <th className="widgetLgTh">Status</th>
+                        <th className="widgetLgTh">Khách hàng</th>
+                        <th className="widgetLgTh">Ngày giao dịch</th>
+                        <th className="widgetLgTh">Số lượng</th>
+                        <th className="widgetLgTh">Trạng thái</th>
                     </tr>
 
                     <tr className="widgetLgTr">
@@ -27,7 +27,7 @@ const WidgetLg = () => {
                             alt=""
                             className="widgetLgImg"
                             />
-                            <span className="widgetLgName">Susan Carol</span>
+                            <span className="widgetLgName">Phạm Đình Nhật</span>
                         </td>
                         <td className="widgetLgDate">2 Jun 2021</td>
                         <td className="widgetLgAmount">$122.00</td>
@@ -43,7 +43,7 @@ const WidgetLg = () => {
                             alt=""
                             className="widgetLgImg"
                             />
-                            <span className="widgetLgName">Susan Carol</span>
+                            <span className="widgetLgName">Phạm Đình Nhật</span>
                         </td>
                         <td className="widgetLgDate">2 Jun 2021</td>
                         <td className="widgetLgAmount">$122.00</td>
@@ -59,7 +59,7 @@ const WidgetLg = () => {
                             alt=""
                             className="widgetLgImg"
                             />
-                            <span className="widgetLgName">Susan Carol</span>
+                            <span className="widgetLgName">Phạm Đình Nhật</span>
                         </td>
                         <td className="widgetLgDate">2 Jun 2021</td>
                         <td className="widgetLgAmount">$122.00</td>
@@ -75,7 +75,7 @@ const WidgetLg = () => {
                             alt=""
                             className="widgetLgImg"
                             />
-                            <span className="widgetLgName">Susan Carol</span>
+                            <span className="widgetLgName">Phạm Đình Nhật</span>
                         </td>
                         <td className="widgetLgDate">2 Jun 2021</td>
                         <td className="widgetLgAmount">$122.00</td>

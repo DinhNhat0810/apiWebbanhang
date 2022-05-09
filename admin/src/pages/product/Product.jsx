@@ -1,20 +1,42 @@
 import PublishIcon from '@mui/icons-material/Publish'
 import { useState, useContext, useEffect } from 'react'
 import storage from "../../firebase"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useParams} from 'react-router-dom'
 import { updateProduct } from '../../context/productContext/apiCalls'
 import { ProductContext } from '../../context/productContext/ProductContext'
+import axios from 'axios'
 
 import './product.scss'
 
 const Product = () => {
 
-    const location = useLocation()
-    const product = location.product
+    // const location = useLocation()
+    // const product = location.product
     const [imgUpdate, setImgUpdate] = useState(null)
     const [productUpdated, setProductUpdated] = useState(null)
     const [uploaded, setUploaded] = useState(0)
     const { dispatch } = useContext(ProductContext)
+    const { productId } = useParams({})
+
+    const [ product, setProduct]  = useState([])
+
+    console.log(typeof product.title)
+
+    useEffect(() => {
+   
+            const getProduct = async () => {
+                try {
+                    const res = await axios.get(`/products/find/${productId}`)
+                    console.log('ok')
+                    setProduct(res.data.payload)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+    
+            getProduct()
+
+    }, [])
 
 
     useEffect(() => {
@@ -69,7 +91,6 @@ const Product = () => {
         updateProduct(product._id , productUpdated, dispatch)
     }
 
-
     return (
         <div className="product">
             <div className="productTitleContainer">
@@ -116,6 +137,30 @@ const Product = () => {
                             onChange={handleChange}
                         />
 
+                        <label>Chi tiết sản phẩm</label>
+                        <input 
+                            type="text" 
+                            placeholder={product ? product.desc : '...'} 
+                            name="desc"
+                            onChange={handleChange}
+                        />
+
+                        <label>Kích cỡ</label>
+                        <input 
+                            type="text" 
+                            placeholder={product ? product.size : '...'} 
+                            name="size"
+                            onChange={handleChange}
+                        />
+
+                        <label>Giảm giá (%)</label>
+                        <input 
+                            type="text" 
+                            placeholder={product ? product.discount : '...'} 
+                            name="discount"
+                            onChange={handleChange}
+                        />
+
                         <label>Giá sản phẩm</label>
                         <input 
                             type="text" 
@@ -124,18 +169,11 @@ const Product = () => {
                             onChange={handleChange}
                         />
 
-                        <label>Chi tiết sản phẩm</label>
+                        <label>Thể loại sản phẩm</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.desc : '...'} 
-                            name="desc"
-                            onChange={handleChange}
-                        />
-                        <label>Kích cỡ</label>
-                        <input 
-                            type="text" 
-                            placeholder={product ? product.size : '...'} 
-                            name="desc"
+                            placeholder={product ? product.categories : '...'} 
+                            name="categories"
                             onChange={handleChange}
                         />
                         
@@ -154,15 +192,18 @@ const Product = () => {
                                 onChange={handlePreviewImg}
                             />
                         </div>
+                       <div className="buttons">
                         {uploaded === 1 ? (
+                                <p>Chọn nút cập nhật để hoàn thành</p>
+                                ) : (
+                                <button className="productButton" onClick={handleUpload}>
+                                    Cập nhật hình ảnh
+                                </button>
+                            )}
                             <button className="productButton" onClick={handleSubmit}>
                                 Cập nhật
                             </button>
-                            ) : (
-                            <button className="productButton" onClick={handleUpload}>
-                                Tải ảnh lên
-                            </button>
-                        )}
+                       </div>
                     </div>
                 </form>
             </div>

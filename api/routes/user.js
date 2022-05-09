@@ -42,8 +42,7 @@ router.get('/find/:id' , async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         const { password, ...infor } = user._doc
-        console.log(user._doc)
-        res.status(200).json(infor)
+        res.status(200).json( {status: 'success', payload:infor} )
     } catch (err) {
         res.status(500).json(err)
     }
@@ -61,7 +60,7 @@ router.get('/' , verify, async (req, res) => {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json('You are not allowed to see all users!')
+        res.status(403).json('Bạn không có đủ quyền để hiển thị tất cả người dùng!')
     }
 })
 

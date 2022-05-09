@@ -56,7 +56,7 @@ export const createUser = async (user, dispatch) => {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     })
-    console.log('Done')
+    alert(`Thêm thành công tài khoản ${user.username}`)
     dispatch(createUserSuccess(res.data))
   } catch (err) {
     dispatch(createUserFailure());
@@ -72,8 +72,7 @@ export const updateUser = async (id, userUpdate, dispatch) => {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     })
-    console.log(userUpdate)
-    console.log('Done')
+    alert(`Cập nhật thành công`)
     dispatch(updateUserSuccess(res.data))
   } catch (err) {
     dispatch(updateUserFailure())

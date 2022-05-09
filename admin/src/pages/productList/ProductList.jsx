@@ -28,8 +28,8 @@ const ProductList = () => {
     }
 
     const columns = [
-        { field: '_id', headerName: 'ID', width: 200 },
-        { field: 'product', headerName: 'Product', width: 300, renderCell: (params) => { 
+        { field: '_id', headerName: 'Mã sản phẩm', width: 200 },
+        { field: 'product', headerName: 'Sản phẩm', width: 300, renderCell: (params) => { 
           return (
             <div className="productListItem">
               <img className="productListImg" src={params.row.img} alt="" />
@@ -39,19 +39,31 @@ const ProductList = () => {
         }},
         {
           field: 'price',
-          headerName: 'Price',
+          headerName: 'Giá',
           width: 160,
           renderCell: (params) => {
             return (
               <>
-                <span>{params.row.price}</span>
+                <span>{params.row.price}.000vnđ</span>
+              </>
+            )
+          }
+        },
+        {
+          field: 'categories',
+          headerName: 'Thể loại',
+          width: 160,
+          renderCell: (params) => {
+            return (
+              <>
+                <span>{params.row.categories}</span>
               </>
             )
           }
         },
         {
           field: 'action',
-          headerName: 'Action',
+          headerName: '',
           width: 120,
           renderCell: (params) => {
             return (

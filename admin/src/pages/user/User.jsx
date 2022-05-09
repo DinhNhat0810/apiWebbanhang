@@ -3,16 +3,36 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import PublishIcon from '@mui/icons-material/Publish'
 import { useState, useContext, useEffect } from 'react'
 import storage from "../../firebase"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { updateUser } from '../../context/userContext/apiCalls'
 import { UserContext } from '../../context/userContext/UserContext'
+import axios from 'axios'
 
 import './user.scss'
 
 const User = () => {
+    const { userId } = useParams()
+    // const location = useLocation()
+    // const user = location.user 
 
-    const location = useLocation()
-    const user = location.user
+    const [ user, setUser]  = useState([])
+
+    useEffect(() => {
+   
+            const getUser = async () => {
+                try {
+                    const res = await axios.get(`/users/find/${userId}`)
+                    console.log('ok')
+                    setUser(res.data.payload)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+    
+            getUser()
+
+    }, [])
+    
 
     const [imgUpdate, setImgUpdate] = useState(null)
     const [userUpdated, setUserUpdated] = useState(null)
@@ -47,7 +67,7 @@ const User = () => {
             const uploadTask = storage.ref(`/items/${fileName}`).put(item.file)
             uploadTask.on('state_changed', (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                console.log('Upload is ' + progress + ' % done.') 
+                console.log('Upload is ' + progress + ' % done.')
             }, err => {console.log(err)}, () => {
                 uploadTask.snapshot.ref.getDownloadURL().then((url) => {
                     setUserUpdated(prev => {
@@ -68,7 +88,7 @@ const User = () => {
     }
   
     const handleSubmit = (e) => {
-        console.log(imgUpdate)
+        
         e.preventDefault()
         updateUser(user._id , userUpdated, dispatch)
     }
@@ -141,12 +161,20 @@ const User = () => {
                         <div className="userUpdateRight">
                             <p>Ảnh đại diện</p>
                             <div className="userUpdateUpload">
-                                <img
+                                {/* <img
                                     className="userUpdateImg"
-                                    src={imgUpdate ? imgUpdate.preview : user.profilePicture}
+                                    // src={imgUpdate ? imgUpdate.preview : user.profilePicture}
                                     alt=""
                               
-                                />
+                                /> */}
+
+                                {user &&
+                                    <img
+                                        className="userUpdateImg"
+                                        src={imgUpdate ? imgUpdate.preview : user.profilePicture}
+                                        alt=""
+                                    />
+                                }   
                                 <label htmlFor="file">
                                     <PublishIcon className="userUpdateIcon" />
                                 </label>
@@ -158,16 +186,21 @@ const User = () => {
                                     onChange={handlePreviewImg}
                                 />
                             </div>
-                            {uploaded === 1 ? (
+                            <div>
+                                {uploaded === 1 ? (
+                                    <p>Tải ảnh thành công</p>
+                                    ) : (
+                                    <button className="userUpdateButton" onClick={handleUpload}>
+                                        Tải ảnh lên
+                                    </button>
+                                )}
                                 <button className="userUpdateButton" onClick={handleSubmit}>
-                                    Cập nhật
+                                Cập nhật
                                 </button>
-                                ) : (
-                                <button className="userUpdateButton" onClick={handleUpload}>
-                                    Tải ảnh lên
-                                </button>
-                            )}
+                            </div>
                         </div>
+
+                        
                     </form>
                 </div>
 

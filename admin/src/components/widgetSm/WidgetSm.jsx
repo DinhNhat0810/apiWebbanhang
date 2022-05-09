@@ -41,7 +41,7 @@ const WidgetSm = () => {
                         </div>
                         <button className="widgetSmButton">
                             <VisibilityIcon className="widgetSmIcon"/>
-                            Display
+                            Hiển thị
                         </button>
                     </li>
                 ))}

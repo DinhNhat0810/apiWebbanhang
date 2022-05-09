@@ -14,7 +14,7 @@ const NewUser = () => {
     }
 
     const handleSubmit = (e) => {
-        console.log(user)
+
         e.preventDefault()
         createUser(user, dispatch)
     }

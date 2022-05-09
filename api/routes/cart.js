@@ -60,7 +60,7 @@ router.get("/find/:userId", verify , async (req, res) => {
     }
 })
 
-//GET ALL PRODUCT
+//GET ALL CART
 router.get("/", verify , async (req, res) => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
         try {

@@ -48,19 +48,19 @@ const NewProduct = () => {
         setProduct({ ...product, [e.target.name]: value })
     }
 
-    const handleUpload = (e) => {
-        
+    const handleSubmit = (e) => {
         e.preventDefault()
         upload([
             { file: productImg, label: "img" },
         ])
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        createProduct(product, dispatch)
-        setUploaded((prev) => prev - 1)
-    }
+    useEffect(() => {
+        if (uploaded === 1) {
+            createProduct(product, dispatch)
+            setUploaded((prev) => prev - 1)
+        }
+    }, [uploaded])
 
     return (
         <div className="newProduct">
@@ -72,6 +72,7 @@ const NewProduct = () => {
                         <input 
                             type="file" 
                             id="file" 
+                            required
                             onChange = {handlePreviewProductImg} 
                         />
                     </div>
@@ -110,21 +111,35 @@ const NewProduct = () => {
                         <label>Kích cỡ</label>
                         <input 
                             type="text" 
-                            placeholder="..."
+                            placeholder="example: 28, 29"
                             name="size" 
                             onChange={handleChange}
                         />
                     </div>
 
-                    {uploaded === 1 ? (
-                            <button className="addProductButton" onClick={handleSubmit}>
-                                Cập nhật
-                            </button>
-                            ) : (
-                            <button className="addProductButton" onClick={handleUpload}>
-                                Tải ảnh lên
-                            </button>
-                        )}
+                    <div className="addProductItem">
+                        <label>Giảm giá</label>
+                        <input 
+                            type="text" 
+                            placeholder="..."
+                            name="discount" 
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="addProductItem">
+                        <label>Loại sản phẩm</label>
+                        <input 
+                            type="text" 
+                            placeholder="example: Nam, NỮ"
+                            name="categories" 
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <button className="addProductButton" onClick={handleSubmit}>
+                        Thêm sản phẩm
+                    </button>
                 </form>
 
                 <div className="addProductDisplayImg">

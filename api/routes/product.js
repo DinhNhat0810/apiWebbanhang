@@ -7,15 +7,21 @@ const Product = require("../models/Product")
 router.post("/", verify , async (req, res) => {
     if (req.user.isAdmin) {
 
+        const { title, desc, price } = req.body
+
+        if (!title || !desc || !price) {
+            return res.status(200).json({ status:"failure", message: "Vui lòng nhập đủ thông tin", payload : null })
+        }
+
         const newProduct = new Product(req.body)
         try {
             const savedProduct = await newProduct.save()
-            res.status(200).json(savedProduct)
+            return res.status(200).json( {status: "success", message: `Thêm sản phẩm ${title} thành công`, payload: savedProduct} )
         } catch (err) {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json('You are not allowed to create users!')
+        res.status(403).json('Bạn không có quyền để tạo mới sản phẩm!')
     }
 
 })
@@ -31,7 +37,7 @@ router.put("/:id", verify , async (req, res) => {
             res.status(500).json(err)
         }
     } else {
-        res.status(403).json('You are not allowed to update user!')
+        res.status(403).json('Bạn không có quyền để sửa sản phẩm!')
     }
 
 })
@@ -42,12 +48,12 @@ router.delete("/:id", verify , async (req, res) => {
 
         try {
             await Product.findByIdAndDelete(req.params.id)
-            res.status(200).json('Product has been deleted...')
+            res.status(200).json('Sản phẩm đã được xóa...')
         } catch (err) {
             res.status(500).json(err);
         }
     } else {
-        res.status(403).json('You are not allowed to update user!')
+        res.status(403).json('Bạn không có quyền xóa sản phẩm!')
     }
 
 })
@@ -57,14 +63,14 @@ router.get("/find/:id" , async (req, res) => {
 
     try {
         const product = await Product.findById(req.params.id)
-        res.status(200).json(product)
+        res.status(200).json({ status: 'success',payload: product})
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({ status: "failure", message: "Sản phẩm không tồn tại", payload:null});
     }
 })
 
 //GET ALL PRODUCT
-router.get("/", verify , async (req, res) => {
+router.get("/", async (req, res) => {
     const qNew = req.query.new
     const qCategory = req.query.category
     try {
@@ -79,16 +85,44 @@ router.get("/", verify , async (req, res) => {
                 },
             })
         } else {
-            products = await Product.find()
+            products = await Product.find().sort({ createdAt: -1 })
         }
 
-        res.status(200).json(products)
+        res.status(200).json( {status: "success", payload: products}) 
     } catch (err) {
         res.status(500).json(err)
     }
     
 
 })
+
+
+//GET theo thể loại
+// router.get("/" , async (req, res) => {
+//     const qNew = req.query.new
+//     const qCategory = req.query.category
+//     try {
+//         let products
+
+//         if (qNew) {
+//             products = await Product.find().sort({ createdAt: -1 }).limit(1)
+//         } else if (qCategory) {
+//             products = await Product.find({
+//                 categories: {
+//                 $in: [qCategory],
+//                 },
+//             })
+//         } else {
+//             products = await Product.find().sort({ createdAt: -1 })
+//         }
+
+//         res.status(200).json( {status: "success", payload: products}) 
+//     } catch (err) {
+//         res.status(500).json(err)
+//     }
+    
+
+// })
 
 
 module.exports = router

@@ -1,9 +1,16 @@
 .login {
+    background: url('https://cdn5.f-cdn.com/contestentries/1578585/21468461/5d62b49ac544b_thumb900.jpg') top center / cover no-repeat;
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    h1 {
+        margin-bottom: 1rem;
+        color: darkcyan;
+    }
 
     .loginForm {
         display: flex;
@@ -12,6 +19,7 @@
         .loginInput {
             margin-bottom: 10px;
             padding: 5px;
+            outline: none;
         }
 
         .loginButton {
