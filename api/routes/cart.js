@@ -9,7 +9,8 @@ router.post("/", verify , async (req, res) => {
         const newCart = new Cart(req.body)
         try {
             const savedCart = await newCart.save()
-            res.status(200).json(savedCart)
+            res.status(200).json({ status: 'success',massage: "Tạo giỏ hàng thành công!" , payload: savedCart })
+
         } catch (err) {
             res.status(500).json(err)
         }
@@ -23,7 +24,8 @@ router.put("/:id", verify , async (req, res) => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
         try {
             const updateCart = await Cart.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
-             res.status(200).json(updateCart)
+            res.status(200).json({ status: 'success',massage: "Cập nhật giỏ hàng thành công!" , payload: updateCart })
+
         } catch (err) {
             res.status(500).json(err)
         }
@@ -37,7 +39,7 @@ router.delete("/:id", verify , async (req, res) => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
         try {
             await Cart.findByIdAndDelete(req.params.id)
-            res.status(200).json("Cart has been deleted...")
+            res.status(200).json({ status: 'success',massage: "Giỏ hàng đã được xóa!" , payload: null })
         } catch (err) {
             res.status(500).json(err)
         }

@@ -10,17 +10,15 @@ import './product.scss'
 
 const Product = () => {
 
-    // const location = useLocation()
-    // const product = location.product
     const [imgUpdate, setImgUpdate] = useState(null)
     const [productUpdated, setProductUpdated] = useState(null)
     const [uploaded, setUploaded] = useState(0)
+    const [product, setProduct]  = useState([])
+    const [cat, setCat] = useState([])
+    const [productSize, setProductSize] = useState([])
     const { dispatch } = useContext(ProductContext)
     const { productId } = useParams({})
 
-    const [ product, setProduct]  = useState([])
-
-    console.log(typeof product.title)
 
     useEffect(() => {
    
@@ -53,12 +51,6 @@ const Product = () => {
         setImgUpdate(file)
     }
 
-    const handleChange = (e) => {
-
-        const value = e.target.value
-        setProductUpdated({ ...productUpdated, [e.target.name]: value })
-    }
-
     const upload = (items) => {
         items.forEach((item) => {
 
@@ -85,6 +77,19 @@ const Product = () => {
             { file: imgUpdate, label: "img" },
         ])
     }
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        setProductUpdated({ ...productUpdated, [e.target.name]: value,  size: productSize, categories: cat })
+    }
+
+    const handleSize = (e) => {
+        setProductSize(e.target.value.split(","))
+    } 
+
+    const handleCat = (e) => {
+        setCat(e.target.value.split(","))
+    } 
   
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -150,7 +155,7 @@ const Product = () => {
                             type="text" 
                             placeholder={product ? product.size : '...'} 
                             name="size"
-                            onChange={handleChange}
+                            onChange={handleSize}
                         />
 
                         <label>Giảm giá (%)</label>
@@ -174,7 +179,7 @@ const Product = () => {
                             type="text" 
                             placeholder={product ? product.categories : '...'} 
                             name="categories"
-                            onChange={handleChange}
+                            onChange={handleCat}
                         />
                         
                     </div>

@@ -5,10 +5,13 @@ import storage from "../../firebase"
 import './newProduct.scss'
 
 const NewProduct = () => {
+    const { dispatch } = useContext(ProductContext)
     const [productImg, setProductImg] = useState()
     const [product, setProduct] = useState(null)
-    const { dispatch } = useContext(ProductContext)
     const [uploaded, setUploaded] = useState(0)
+    const [cat, setCat] = useState([])
+    const [productSize, setProductSize] = useState([])
+
 
     useEffect(() => {
 
@@ -45,8 +48,16 @@ const NewProduct = () => {
 
     const handleChange = (e) => {
         const value = e.target.value
-        setProduct({ ...product, [e.target.name]: value })
+        setProduct({ ...product, [e.target.name]: value, size: productSize, categories: cat })
     }
+
+    const handleSize = (e) => {
+        setProductSize(e.target.value.split(","))
+    } 
+
+    const handleCat = (e) => {
+        setCat(e.target.value.split(","))
+    } 
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -113,7 +124,7 @@ const NewProduct = () => {
                             type="text" 
                             placeholder="example: 28, 29"
                             name="size" 
-                            onChange={handleChange}
+                            onChange={handleSize}
                         />
                     </div>
 
@@ -133,7 +144,7 @@ const NewProduct = () => {
                             type="text" 
                             placeholder="example: Nam, NỮ"
                             name="categories" 
-                            onChange={handleChange}
+                            onChange={handleCat}
                         />
                     </div>
 

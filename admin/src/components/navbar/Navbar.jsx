@@ -1,8 +1,7 @@
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import LanguageIcon from '@mui/icons-material/Language'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useRef,useState } from 'react'
 import './navbar.scss' 
 
 const Navbar = () => {
@@ -48,7 +47,6 @@ const Navbar = () => {
                             onClick={handleClick} 
                         />
                         <div className="options" ref={optionsRef}>
-                            <Link to={{ pathname: "/user/" + infoUser._id}} className="options__link"><p>Information</p></Link>
                             <p onClick={handleLogout}>Logout</p>
                         </div>
                     </div>

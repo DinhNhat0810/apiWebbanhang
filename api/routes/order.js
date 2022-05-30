@@ -11,6 +11,8 @@ router.post("/", verify , async (req, res) => {
         try {
             const savedOrder = await newOrder.save()
             res.status(200).json(savedOrder)
+            res.status(200).json({ status: 'success',massage: "Đặt hàng thành công!" , payload: savedOrder })
+
         } catch (err) {
             res.status(500).json(err)
         }
@@ -24,7 +26,8 @@ router.put("/:id", verify , async (req, res) => {
     if (req.user.isAdmin) {
         try {
             const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {$set: req.body }, { new: true })
-            res.status(200).json(updatedOrder)
+            res.status(200).json({ status: 'success',massage: "Cập nhật thành công!" , payload: updatedOrder })
+
         } catch (err) {
             res.status(500).json(err)
         }
@@ -38,7 +41,7 @@ router.delete("/:id", verify , async (req, res) => {
     if (req.user.isAdmin) {
         try {
             await Order.findByIdAndDelete(req.params.id)
-            res.status(200).json("Order has been deleted...")
+            res.status(200).json({ status: 'success',massage: "Đơn hàng đã được xóa!" , payload: null })
         } catch (err) {
             res.status(500).json(err)
         }

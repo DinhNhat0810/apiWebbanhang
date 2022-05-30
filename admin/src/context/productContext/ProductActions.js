@@ -58,6 +58,20 @@ export const updateProductFailure = () => ({
 })
 
 
+//UPDATE product
+export const searchProductStart = () => ({
+  type: "SEARCH_PRODUCT_START",
+})
+
+export const searchProductSuccess = (product) => ({
+  type: "SEARCH_PRODUCT_SUCCESS",
+  payload: product,
+})
+
+export const searchProductFailure = () => ({
+  type: "SEARCH_PRODUCT_FAILURE",
+})
+
 
 
   

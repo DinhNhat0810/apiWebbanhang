@@ -11,6 +11,9 @@ import {
   updateProductStart, 
   updateProductFailure, 
   updateProductSuccess,
+  searchProductStart, 
+  searchProductFailure, 
+  searchProductSuccess,
 
 } from "./ProductActions"
 import axios from 'axios'
@@ -29,6 +32,24 @@ export const getProducts = async (dispatch) => {
     } catch (err) {
       dispatch(getProductsFailure())
     }
+}
+
+//Search products
+export const searchProducts = async (value, dispatch) => {
+  dispatch(searchProductStart())
+  try {
+    const res = await axios.get("/products?category=" + value, {
+      headers: {
+        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      },
+    })
+    dispatch(searchProductSuccess(res.data.payload))
+    if (res.data.payload.length > 0) {
+      console.log(res.data.payload)
+    }
+  } catch (err) {
+    dispatch(searchProductFailure())
+  }
 }
 
 //DELETE product

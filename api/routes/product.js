@@ -8,9 +8,14 @@ router.post("/", verify , async (req, res) => {
     if (req.user.isAdmin) {
 
         const { title, desc, price } = req.body
+        const titleCheck =  await Product.findOne({ title: title })
 
         if (!title || !desc || !price) {
             return res.status(200).json({ status:"failure", message: "Vui lòng nhập đủ thông tin", payload : null })
+        }
+
+        if (titleCheck) {
+            return res.status(200).json({ status:"failure", message: "Tên sản phẩm đã tồn tại", payload : null })
         }
 
         const newProduct = new Product(req.body)
@@ -68,11 +73,37 @@ router.get("/find/:id" , async (req, res) => {
         res.status(500).json({ status: "failure", message: "Sản phẩm không tồn tại", payload:null});
     }
 })
+// const product = await Product.find({title:{$regex:req.params.key}})
+
+//SEARCH PRODUCT
+router.get("/search/:key" , async (req, res) => {
+
+    try {
+        const searchValue = req.params.key
+        const newStr = `${searchValue[0].toUpperCase()}${searchValue.slice(1)}`;
+
+        const product = await Product.find(
+            {
+                "$or":[
+                    {title:{$regex:newStr}},
+                    {categories:{$regex:newStr}},
+                ]
+            }
+        )
+     
+        
+        res.status(200).json({ status: 'success', payload: product})
+    } catch (err) {
+        res.status(500).json({ status: "failure", message: "Sản phẩm không tồn tại", payload:null});
+    }
+})
+
 
 //GET ALL PRODUCT
 router.get("/", async (req, res) => {
     const qNew = req.query.new
     const qCategory = req.query.category
+    
     try {
         let products
 
@@ -97,32 +128,6 @@ router.get("/", async (req, res) => {
 })
 
 
-//GET theo thể loại
-// router.get("/" , async (req, res) => {
-//     const qNew = req.query.new
-//     const qCategory = req.query.category
-//     try {
-//         let products
-
-//         if (qNew) {
-//             products = await Product.find().sort({ createdAt: -1 }).limit(1)
-//         } else if (qCategory) {
-//             products = await Product.find({
-//                 categories: {
-//                 $in: [qCategory],
-//                 },
-//             })
-//         } else {
-//             products = await Product.find().sort({ createdAt: -1 })
-//         }
-
-//         res.status(200).json( {status: "success", payload: products}) 
-//     } catch (err) {
-//         res.status(500).json(err)
-//     }
-    
-
-// })
 
 
 module.exports = router

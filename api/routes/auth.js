@@ -13,9 +13,15 @@ router.post("/register", async (req, res) => {
     }
 
     const userCheck = await User.findOne({ username: username })
-    userCheck && res.status(200).json( { status: "failure", message: "Tên đăng nhập đã tồn tại!", payload: null} )
     const emailCheck = await User.findOne({ email: email })
-    emailCheck && res.status(200).json( { status: "failure", message: "Địa chỉ email đã tồn tại!", payload: null} )
+
+    if (userCheck) {
+      return res.status(200).json( { status: "failure", message: "Tên đăng nhập đã tồn tại!", payload: null} )
+    }
+
+    if (emailCheck) {
+      return res.status(200).json( { status: "failure", message: "Địa chỉ email đã tồn tại!", payload: null} )
+    }
 
     const newUser = new User({
       username: req.body.username,
@@ -54,7 +60,7 @@ router.post('/login', async (req, res) => {
         )
 
         const { password, ...infor } = user._doc
-        res.status(200).json({ status: 'success', message: "Đăng nhập thành công", payload: {...infor, accessToken} })
+        return res.status(200).json({ status: 'success', message: "Đăng nhập thành công", inforUser: {...infor, accessToken} })
         
     } catch (err) {
         res.status(500).json(err)

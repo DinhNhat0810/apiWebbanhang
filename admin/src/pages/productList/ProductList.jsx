@@ -1,7 +1,8 @@
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import { Link } from 'react-router-dom'
-import { useContext, useEffect } from 'react'
+import SearchIcon from '@mui/icons-material/Search'
+import { useContext, useEffect, useState } from 'react'
 import { ProductContext } from '../../context/productContext/ProductContext'
 import { getProducts, deleteProduct } from '../../context/productContext/apiCalls'
 import './productList.scss'
@@ -9,6 +10,8 @@ import './productList.scss'
 
 const ProductList = () => {
     const { products, dispatch } = useContext(ProductContext)
+    const [searchValue, setSearchValue] = useState('')
+
 
     useEffect(() => {
 
@@ -22,10 +25,15 @@ const ProductList = () => {
         isCancelled = true
       }
     }, [dispatch])
-    
+
     const handleDelete = (id) => {
-        deleteProduct(id, dispatch)
+      deleteProduct(id, dispatch)
     }
+
+    const handleChange = (e) => {
+      setSearchValue(e.target.value)
+    }
+
 
     const columns = [
         { field: '_id', headerName: 'Mã sản phẩm', width: 200 },
@@ -76,11 +84,19 @@ const ProductList = () => {
             )
           }
         },
-      ]
-
+    ]
 
     return (
         <div className="productList">
+            <div className="productList__search">
+              <input 
+                className="productList__search-input" 
+                type="text" 
+                placeholder="Tìm kiếm sản phẩm..."
+                onChange={handleChange}
+              />
+              <SearchIcon className="productList__search-icon"/>
+            </div>
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={products}
