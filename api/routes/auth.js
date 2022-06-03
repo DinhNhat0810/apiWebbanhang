@@ -44,7 +44,10 @@ router.post("/register", async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email })
-        !user && res.status(401).json( { status: 'failure', massage: 'Địa chỉ email không chính xác!', payload: null} )
+        
+        if (!user) {
+          return res.status(401).json( { status: 'failure', massage: 'Địa chỉ email không chính xác!', payload: null} )
+        }
 
         // Decrypt password
         var bytes  = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY)
@@ -60,7 +63,7 @@ router.post('/login', async (req, res) => {
         )
 
         const { password, ...infor } = user._doc
-        return res.status(200).json({ status: 'success', message: "Đăng nhập thành công", inforUser: {...infor, accessToken} })
+        return res.status(200).json({ status: 'success', message: "Đăng nhập thành công", payload: {...infor, accessToken} })
         
     } catch (err) {
         res.status(500).json(err)

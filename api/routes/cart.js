@@ -5,7 +5,7 @@ const Cart = require("../models/Cart")
 
 //CREATE
 router.post("/", verify , async (req, res) => {
-    if (req.user.id === req.params.id || req.user.isAdmin) {
+    if (req.user._id === req.params.id || req.user.isAdmin) {
         const newCart = new Cart(req.body)
         try {
             const savedCart = await newCart.save()
@@ -21,7 +21,7 @@ router.post("/", verify , async (req, res) => {
 
 //UPDATE
 router.put("/:id", verify , async (req, res) => {
-    if (req.user.id === req.params.id || req.user.isAdmin) {
+    if (req.user._id === req.params.id || req.user.isAdmin) {
         try {
             const updateCart = await Cart.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
             res.status(200).json({ status: 'success',massage: "Cập nhật giỏ hàng thành công!" , payload: updateCart })

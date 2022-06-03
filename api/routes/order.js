@@ -5,7 +5,7 @@ const Order = require("../models/Order")
 
 //CREATE
 router.post("/", verify , async (req, res) => {
-    if (req.user.id === req.params.id || req.user.isAdmin) {
+    if (req.user._id === req.params.id || req.user.isAdmin) {
 
         const newOrder = new Order(req.body);
         try {

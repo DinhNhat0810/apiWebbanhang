@@ -9,6 +9,8 @@ const WidgetSm = () => {
     const [ newUsers, setNewUsers ]  = useState([])
 
     useEffect(() => {
+        let isCancelled = false
+
         const getUsers = async () => {
             try {
                 const res = await axios.get('/users?new=true', {
@@ -22,7 +24,14 @@ const WidgetSm = () => {
             }
         }
 
-        getUsers()
+        if (!isCancelled) {
+            getUsers()
+
+        }
+
+        return () => {
+            isCancelled = true
+        }
     }, [])
 
     return (

@@ -88,15 +88,7 @@ const ProductList = () => {
 
     return (
         <div className="productList">
-            <div className="productList__search">
-              <input 
-                className="productList__search-input" 
-                type="text" 
-                placeholder="Tìm kiếm sản phẩm..."
-                onChange={handleChange}
-              />
-              <SearchIcon className="productList__search-icon"/>
-            </div>
+
             <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={products}

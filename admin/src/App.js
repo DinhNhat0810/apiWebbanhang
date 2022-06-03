@@ -17,7 +17,7 @@ import { useContext } from 'react'
 const App = () => {
 
     const { user } = useContext(AuthContext)
-
+ 
     return (
         <Router>
             <Switch>
@@ -25,9 +25,9 @@ const App = () => {
                 <Route exact path="/">
                     {user ? <Home /> : <Redirect to="/login" />}
                 </Route>
-                <Route path="/login">
+                {/* <Route path="/login">
                     {!user ? <Login /> : <Redirect to="/" />}
-                </Route>
+                </Route> */}
 
                 {!user ? <Login /> : (
                     <div className="App">
