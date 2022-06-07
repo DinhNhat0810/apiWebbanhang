@@ -12,8 +12,6 @@ import './user.scss'
 
 const User = () => {
     const { userId } = useParams()
-    // const location = useLocation()
-    // const user = location.user 
 
     const [ user, setUser]  = useState([])
 
@@ -116,6 +114,7 @@ const User = () => {
                         <div className="userShowTopTitle">
                             <span className="userShowUsername">{user ? user.username : '...'}</span>
                         </div>
+
                     </div>  
                     
                     <div className="userShowBottom">
@@ -154,6 +153,17 @@ const User = () => {
                                     className="userUpdateInput"
                                     onChange={handleChange}
                                     name='email'
+                                />
+                            </div>
+
+                            <div className="userUpdateItem">
+                                <label>Mật khẩu</label>
+                                <input
+                                    type="text"
+                                    placeholder={user ? user.password : '...'}
+                                    className="userUpdateInput"
+                                    onChange={handleChange}
+                                    name='password'
                                 />
                             </div>
                         </div>

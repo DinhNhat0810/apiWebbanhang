@@ -1,7 +1,7 @@
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import LanguageIcon from '@mui/icons-material/Language'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { useRef,useState } from 'react'
+import { useRef } from 'react'
 import './navbar.scss' 
 
 const Navbar = () => {
@@ -16,7 +16,9 @@ const Navbar = () => {
     const handleLogout = () => {
         
         localStorage.removeItem("user")
-        window.location.reload()
+        window.location.href = "http://localhost:3000/login";
+        
+        
     }
 
     return (

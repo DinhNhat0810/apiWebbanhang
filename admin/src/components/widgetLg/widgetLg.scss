@@ -45,17 +45,17 @@
                     border: none;
                     border-radius: 10px;
 
-                    &.Approved{
+                    &.approved{
                         background-color: #e5faf2;
                         color: #3bb077;
                     }
 
-                    &.Declined{
+                    &.declined{
                         background-color: #fff0f1;
                         color: #d95087;
                     }
 
-                    &.Pending{
+                    &.pending{
                         background-color: #ebf1fe;
                         color: #2a7ade;
                     

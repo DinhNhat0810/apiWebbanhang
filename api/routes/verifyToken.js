@@ -6,7 +6,9 @@ function verify(req, res, next) {
     const token = authHeader.split(" ")[1]
 
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-      if (err) res.status(200).json({ status: "failure", massage: "Token không hợp lệ!", payload: null })
+      if (err) {
+        return res.status(200).json({ status: "failure", massage: "Token không hợp lệ!", payload: null })
+      }
       req.user = user
       next()
     });

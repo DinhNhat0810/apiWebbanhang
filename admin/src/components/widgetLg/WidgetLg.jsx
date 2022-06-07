@@ -1,94 +1,93 @@
-import './widgetLg.scss'
+import "./widgetLg.scss";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-
+function changeDateFormat(date) {
+  const newDate = new Date(date);
+  const day = `0${newDate.getDate()}`.slice(-2);
+  const month = `0${newDate.getMonth() + 1}`.slice(-2);
+  const year = newDate.getFullYear();
+  const hours = `0${newDate.getHours()}`.slice(-2);
+  const minutes = `0${newDate.getMinutes()}`.slice(-2);
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
 
 const WidgetLg = () => {
+  const [orders, setOrders] = useState([]);
 
-    const Button = ({ type }) => {
-        return <button className={"widgetLgButton " + type}>{type}</button>;
+  const getOrders = async () => {
+    try {
+      const res = await axios.get("/orders", {
+        headers: {
+          token:
+            "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      });
+      setOrders(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    if (!isCancelled) {
+      getOrders();
     }
 
-    return (
-        <div className="widgetLg">
-            <h3 className="widgetLgTitle">Giao dich gần nhất</h3>
-            <table className="widgetLgTable">
-                <tbody>
-                    <tr className="widgetLgTr">
-                        <th className="widgetLgTh">Khách hàng</th>
-                        <th className="widgetLgTh">Ngày giao dịch</th>
-                        <th className="widgetLgTh">Số lượng</th>
-                        <th className="widgetLgTh">Trạng thái</th>
-                    </tr>
+    
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
-                    <tr className="widgetLgTr">
-                        <td className="widgetLgUser">
-                            <img
-                            src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                            alt=""
-                            className="widgetLgImg"
-                            />
-                            <span className="widgetLgName">Phạm Đình Nhật</span>
-                        </td>
-                        <td className="widgetLgDate">2 Jun 2021</td>
-                        <td className="widgetLgAmount">$122.00</td>
-                        <td className="widgetLgStatus">
-                            <Button type="Approved" />
-                        </td>
-                    </tr>
+ 
 
-                    <tr className="widgetLgTr">
-                        <td className="widgetLgUser">
-                            <img
-                            src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                            alt=""
-                            className="widgetLgImg"
-                            />
-                            <span className="widgetLgName">Phạm Đình Nhật</span>
-                        </td>
-                        <td className="widgetLgDate">2 Jun 2021</td>
-                        <td className="widgetLgAmount">$122.00</td>
-                        <td className="widgetLgStatus">
-                            <Button type="Declined" />
-                        </td>
-                    </tr>
 
-                    <tr className="widgetLgTr">
-                        <td className="widgetLgUser">
-                            <img
-                            src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                            alt=""
-                            className="widgetLgImg"
-                            />
-                            <span className="widgetLgName">Phạm Đình Nhật</span>
-                        </td>
-                        <td className="widgetLgDate">2 Jun 2021</td>
-                        <td className="widgetLgAmount">$122.00</td>
-                        <td className="widgetLgStatus">
-                            <Button type="Pending" />
-                        </td>
-                    </tr>
+  const Button = ({ type }) => {
+    return <button className={"widgetLgButton " + type}>{type}</button>;
+  };
 
-                    <tr className="widgetLgTr">
-                        <td className="widgetLgUser">
-                            <img
-                            src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                            alt=""
-                            className="widgetLgImg"
-                            />
-                            <span className="widgetLgName">Phạm Đình Nhật</span>
-                        </td>
-                        <td className="widgetLgDate">2 Jun 2021</td>
-                        <td className="widgetLgAmount">$122.00</td>
-                        <td className="widgetLgStatus">
-                            <Button type="Approved" />
-                        </td>
-                    </tr>
-                </tbody>
+  return (
+    <div className="widgetLg">
+      <h3 className="widgetLgTitle">Giao dich gần nhất</h3>
+      <table className="widgetLgTable">
+        <tbody>
+          <tr className="widgetLgTr">
+            <th className="widgetLgTh">Khách hàng</th>
+            <th className="widgetLgTh">Ngày giao dịch</th>
+            <th className="widgetLgTh">Số lượng</th>
+            <th className="widgetLgTh">Trạng thái</th>
+          </tr>
 
-                
-            </table>
-        </div>
-    )
-}   
+          {orders &&
+            orders.map((item) => {
+              return (
+                <tr key={item._id} className="widgetLgTr">
+                  <td className="widgetLgUser">
+                    <img
+                      src={item.profilePicture ? item.profilePicture : 'https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-b0de2bad.jpg'}
+                      alt=""
+                      className="widgetLgImg"
+                    />
+                    <span className="widgetLgName">{item.username}</span>
+                  </td>
+                  <td className="widgetLgDate">{changeDateFormat(item.createdAt)}</td>
+                  <td className="widgetLgAmount">${item.amount}</td>
+                  <td className="widgetLgStatus">
+                    <Button type={item.status} />
+                  </td>
+                </tr>
+              );
+            })}
 
-export default WidgetLg
+  
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default WidgetLg;

@@ -1,50 +1,73 @@
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-
-
-
-import './featuredInfo.scss'
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "./featuredInfo.scss";
 
 const FeaturedInfo = () => {
-    return (
-        <div className="featured">
-            <div className="featuredItem">
-                <span className="featuredTitle">Revanue</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$2,33</span>
-                    <span className="featuredMoneyRate">
-                        -11.6 <ArrowDownwardIcon className="featuredIcon negative"/>
-                    </span>
-                </div>
-                <span className="sub">Compared to last month</span>
+  const [income, setIncome] = useState([]);
+  const [perc, setPerc] = useState(0);
 
-            </div>
+  useEffect(() => {
+    const getIncome = async () => {
+      try {
+        const res = await axios.get("orders/income", {
+            headers: {
+              token:
+                "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+          });
+        setIncome(res.data);
+        const arrLength = res.data.length
+        setPerc((res.data[arrLength-1].total * 100) / res.data[arrLength-2].total - 100);
+      } catch {}
+    };
+    getIncome();
+  }, []);
 
-            <div className="featuredItem">
-                <span className="featuredTitle">Sales</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$4,57</span>
-                    <span className="featuredMoneyRate">
-                        -2.6 <ArrowDownwardIcon className="featuredIcon negative"/>
-                    </span>
-                </div>
-                <span className="sub">Compared to last month</span>
+  console.log(income)
 
-            </div>
-
-            <div className="featuredItem">
-                <span className="featuredTitle">Cost</span>
-                <div className="featuredMoneyContainer">
-                    <span className="featuredMoney">$9,33</span>
-                    <span className="featuredMoneyRate">
-                        +3.6 <ArrowUpwardIcon className="featuredIcon"/>
-                    </span>
-                </div>
-                <span className="featuredSub">Compared to last month</span>
-
-            </div>
+  return (
+    <div className="featured">
+      <div className="featuredItem">
+        <span className="featuredTitle">Doanh thu tháng này</span>
+        <div className="featuredMoneyContainer">
+          <span className="featuredMoney">${income[income.length - 1]?.total}</span>
+          <span className="featuredMoneyRate">
+            %{Math.floor(perc)}{" "}
+            {perc < 0 ? (
+              <ArrowDownwardIcon className="featuredIcon negative" />
+            ) : (
+              <ArrowUpwardIcon className="featuredIcon" />
+            )}
+          </span>
         </div>
-    )
-}   
+        <span className="sub">So với tháng trước</span>
+      </div>
 
-export default FeaturedInfo
+      <div className="featuredItem">
+        <span className="featuredTitle">Tổng số đơn hàng</span>
+        <div className="featuredMoneyContainer">
+          <span className="featuredMoney">$4,57</span>
+          <span className="featuredMoneyRate">
+            -2.6 <ArrowDownwardIcon className="featuredIcon negative" />
+          </span>
+        </div>
+        <span className="sub">So với tháng trước</span>
+      </div>
+
+      <div className="featuredItem">
+        <span className="featuredTitle">Cost</span>
+        <div className="featuredMoneyContainer">
+          <span className="featuredMoney">$9,33</span>
+          <span className="featuredMoneyRate">
+            +3.6 <ArrowUpwardIcon className="featuredIcon" />
+          </span>
+        </div>
+        <span className="sub">So với tháng trước</span>
+      </div>
+    </div>
+  );
+};
+
+export default FeaturedInfo;

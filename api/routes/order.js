@@ -1,6 +1,5 @@
 const router = require("express").Router()
 const verify = require("./verifyToken")
-const CryptoJS = require("crypto-js")
 const Order = require("../models/Order")
 
 //CREATE
@@ -10,8 +9,7 @@ router.post("/", verify , async (req, res) => {
         const newOrder = new Order(req.body);
         try {
             const savedOrder = await newOrder.save()
-            res.status(200).json(savedOrder)
-            res.status(200).json({ status: 'success',massage: "Đặt hàng thành công!" , payload: savedOrder })
+            return res.status(200).json({ status: 'success',massage: "Đặt hàng thành công!" , payload: savedOrder })
 
         } catch (err) {
             res.status(500).json(err)
@@ -26,7 +24,7 @@ router.put("/:id", verify , async (req, res) => {
     if (req.user.isAdmin) {
         try {
             const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {$set: req.body }, { new: true })
-            res.status(200).json({ status: 'success',massage: "Cập nhật thành công!" , payload: updatedOrder })
+            return res.status(200).json({ status: 'success',massage: "Cập nhật thành công!" , payload: updatedOrder })
 
         } catch (err) {
             res.status(500).json(err)
@@ -64,6 +62,20 @@ router.get("/find/:userId", verify , async (req, res) => {
     }
 })
 
+//GET ORDERS
+router.get("/", verify , async (req, res) => {
+    if (req.user.isAdmin) {
+        try {
+            const orders = await Order.find().sort({ createdAt: -1 }).limit(4)
+            res.status(200).json(orders)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    } else {
+        res.status(403).json('You can not create!')
+    }
+})
+
 //GET MONTHLY INCOME
 router.get("/income", verify , async (req, res) => {
     if (req.user.isAdmin) {
@@ -86,7 +98,7 @@ router.get("/income", verify , async (req, res) => {
                         total: { $sum: "$sales" },
                     },
                 },
-            ])
+            ]).sort({ _id: 1 })
             res.status(200).json(income)
         } catch (err) {
           res.status(500).json(err)

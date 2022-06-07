@@ -25,9 +25,6 @@ const App = () => {
                 <Route exact path="/">
                     {user ? <Home /> : <Redirect to="/login" />}
                 </Route>
-                {/* <Route path="/login">
-                    {!user ? <Login /> : <Redirect to="/" />}
-                </Route> */}
 
                 {!user ? <Login /> : (
                     <div className="App">

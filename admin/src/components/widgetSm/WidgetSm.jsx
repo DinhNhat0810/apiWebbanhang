@@ -34,6 +34,8 @@ const WidgetSm = () => {
         }
     }, [])
 
+
+
     return (
         <div className="widgetSm">
             <div className="widgetSmTitle">Thành viên mới</div>
