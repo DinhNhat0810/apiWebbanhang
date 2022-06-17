@@ -11,13 +11,12 @@ const blogRoute = require("./routes/blog")
 const stripeRoute = require("./routes/stripe")
 const cors = require('cors');
 const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    origin:'*',
 }
 app.use(cors(corsOptions));
 
-dotenv.config()
+dotenv.config();
+
 
 mongoose
   .connect(process.env.MONGO_URL)
