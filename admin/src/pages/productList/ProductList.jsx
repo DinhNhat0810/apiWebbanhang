@@ -10,7 +10,6 @@ import './productList.scss'
 
 const ProductList = () => {
     const { products, dispatch } = useContext(ProductContext)
-    const [searchValue, setSearchValue] = useState('')
 
 
     useEffect(() => {
@@ -28,10 +27,6 @@ const ProductList = () => {
 
     const handleDelete = (id) => {
       deleteProduct(id, dispatch)
-    }
-
-    const handleChange = (e) => {
-      setSearchValue(e.target.value)
     }
 
 
@@ -52,7 +47,7 @@ const ProductList = () => {
           renderCell: (params) => {
             return (
               <>
-                <span>{params.row.price}.000vnđ</span>
+                <span>${params.row.price}</span>
               </>
             )
           }

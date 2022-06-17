@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     profilePicture: { 
       type: String,
-      default: 'https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=50',
+      default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRopJ5Z5WIfx19Wo91IPJfLE-NRiOMS9qu8lw&usqp=CAU',
       
     },
     isAdmin: {

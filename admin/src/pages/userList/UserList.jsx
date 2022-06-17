@@ -31,7 +31,7 @@ const UserList = () => {
     { field: '_id', headerName: 'ID', width: 200 },
     { field: 'username', headerName: 'Tên đăng nhập', width: 200, renderCell: (params) => { 
       return (
-        <div className="userListUser" key={params.row._id}>
+        <div className="userListUser">
           <img className="userListImg" src={params.row.profilePicture} alt="" />
           {params.row.username}
         </div>
@@ -50,7 +50,7 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={{ pathname: "/user/" + params.row._id, user: params.row }}>
+            <Link to={{ pathname: "/user/" + params.row._id }}>
               <button className="userListEdit">Edit</button>
             </Link>
             <DeleteOutlinedIcon className="userListDelete" onClick={() => handleDelete(params.row._id)}/>
