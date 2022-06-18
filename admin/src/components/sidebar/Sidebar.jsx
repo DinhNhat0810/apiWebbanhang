@@ -40,14 +40,12 @@ const Sidebar = () => {
                                 Sản phẩm
                             </li>
                         </Link>
+                        <Link to="/orders" className="link">
                         <li className="sidebarListItem">
                             <AttachMoneyIcon className="sidebarIcon"/>
                             Đơn hàng
                         </li>
-                        <li className="sidebarListItem">
-                            <NotificationsIcon className="sidebarIcon"/>
-                            Thông báo
-                        </li>
+                        </Link>
                         <Link to="/newProduct" className="link">
                             <li className="sidebarListItem">
                                 <StorefrontIcon className="sidebarIcon"/>

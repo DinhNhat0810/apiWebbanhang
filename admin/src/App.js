@@ -13,6 +13,7 @@ import NewProduct from "./pages/newProduct/NewProduct"
 import Login from "./pages/login/Login"
 import { AuthContext } from './context/authContext/AuthContext'
 import { useContext } from 'react'
+import OrderList from "./pages/orderList/OrderList"
 
 const App = () => {
 
@@ -51,6 +52,9 @@ const App = () => {
                                 </Route>
                                 <Route path="/newProduct">
                                     <NewProduct/>
+                                </Route>
+                                <Route path="/orders">
+                                    <OrderList/>
                                 </Route>
                         </div>
                     </div>

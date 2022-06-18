@@ -6,6 +6,7 @@ import "./featuredInfo.scss";
 
 const FeaturedInfo = () => {
   const [income, setIncome] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [perc, setPerc] = useState(0);
 
   useEffect(() => {
@@ -25,7 +26,23 @@ const FeaturedInfo = () => {
     getIncome();
   }, []);
 
-  console.log(income)
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const res = await axios.get("orders", {
+            headers: {
+              token:
+                "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+          });
+          setOrders(res.data);
+
+      } catch {}
+    };
+    getOrders();
+  }, []);
+
+  
 
   return (
     <div className="featured">
@@ -57,14 +74,10 @@ const FeaturedInfo = () => {
       </div>
 
       <div className="featuredItem">
-        <span className="featuredTitle">Cost</span>
+        <span className="featuredTitle">Tổng sản phẩm đã bán</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$9,33</span>
-          <span className="featuredMoneyRate">
-            +3.6 <ArrowUpwardIcon className="featuredIcon" />
-          </span>
+          <span className="featuredMoney">{orders?.length}</span>
         </div>
-        <span className="sub">So với tháng trước</span>
       </div>
     </div>
   );
