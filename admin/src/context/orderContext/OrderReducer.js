@@ -44,7 +44,27 @@ const OrderReducer = (state, action) => {
                 error: true,
             }
 
-    
+        //UPDATE
+        case "UPDATE_ORDER_START":
+            return {
+                ...state,
+                isFetching: true,
+                error: false,
+            }
+
+        case "UPDATE_ORDER_SUCCESS":
+            return {
+                orders: [...state.orders, action.payload],
+                isFetching: false,
+                error: false,
+            }
+
+        case "UPDATE_ORDER_FAILURE":
+            return {
+                ...state,
+                isFetching: false,
+                error: true,
+            }
 
         default: 
             return { ...state }

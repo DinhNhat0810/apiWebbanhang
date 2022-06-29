@@ -14,7 +14,7 @@ const Product = () => {
     const [productUpdated, setProductUpdated] = useState(null)
     const [uploaded, setUploaded] = useState(0)
     const [product, setProduct]  = useState([])
-    const [cat, setCat] = useState([])
+    // const [cat, setCat] = useState([])
     const [productSize, setProductSize] = useState([])
     const { dispatch } = useContext(ProductContext)
     const { productId } = useParams({})
@@ -78,21 +78,27 @@ const Product = () => {
         ])
     }
 
-    const handleChange = (e) => {
-        const value = e.target.value
-        setProductUpdated({ ...productUpdated, [e.target.name]: value,  size: productSize, categories: cat })
-    }
+    
 
     const handleSize = (e) => {
-        setProductSize(e.target.value.split(","))
+        setProductUpdated({ ...productUpdated, [e.target.name]: e.target.value.split(",") })
+
     } 
 
     const handleCat = (e) => {
-        setCat(e.target.value.split(","))
+    
+        setProductUpdated({ ...productUpdated, [e.target.name]: e.target.value.split(",") })
+
     } 
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        setProductUpdated({ ...productUpdated, [e.target.name]: value})
+    }
   
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(productUpdated)
         updateProduct(product._id , productUpdated, dispatch)
     }
 
@@ -124,7 +130,7 @@ const Product = () => {
                         </div>
                         <div className="productInfoItem">
                             <span className="productInfoKey">Giá sản phẩm: </span>
-                            <span className="productInfoValue">{product ? product.price : '...'}</span>
+                            <span className="productInfoValue">{product ? product.price : '...'} vnđ</span>
                         </div>
                     </div>
                 </div>
@@ -137,7 +143,7 @@ const Product = () => {
                         <label>Tên sản phẩm</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.title : '...'} 
+                            defaultValue={product ? product.title : '...'} 
                             name="title"
                             onChange={handleChange}
                         />
@@ -145,7 +151,7 @@ const Product = () => {
                         <label>Chi tiết sản phẩm</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.desc : '...'} 
+                            defaultValue={product ? product.desc : '...'} 
                             name="desc"
                             onChange={handleChange}
                         />
@@ -153,7 +159,7 @@ const Product = () => {
                         <label>Kích cỡ</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.size : '...'} 
+                            defaultValue={product ? product.size : '...'} 
                             name="size"
                             onChange={handleSize}
                         />
@@ -161,15 +167,15 @@ const Product = () => {
                         <label>Giảm giá (%)</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.discount : '...'} 
+                            defaultValue={product ? product.discount : '...'} 
                             name="discount"
                             onChange={handleChange}
                         />
 
-                        <label>Giá sản phẩm</label>
+                        <label>Giá sản phẩm(vnđ)</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.price : '...'} 
+                            defaultValue={product ? product.price : '...'} 
                             name="price"
                             onChange={handleChange}
                         />
@@ -177,7 +183,7 @@ const Product = () => {
                         <label>Thể loại sản phẩm</label>
                         <input 
                             type="text" 
-                            placeholder={product ? product.categories : '...'} 
+                            defaultValue={product ? product.categories : '...'} 
                             name="categories"
                             onChange={handleCat}
                         />

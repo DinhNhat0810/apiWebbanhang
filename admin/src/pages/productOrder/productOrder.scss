@@ -1,0 +1,24 @@
+.productOrder {
+
+ 
+    img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+
+    &-quantity {
+        display: flex;
+        align-items: center;
+
+        button {
+            margin: 6px;
+            min-width: unset;
+            background-color: transparent;
+            font-size: 20px;
+            color: #000;
+            box-shadow: none;
+        }
+    }
+}

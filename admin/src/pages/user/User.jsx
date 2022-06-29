@@ -144,9 +144,9 @@ const User = () => {
                 <label>Tên đăng nhập</label>
                 <input
                   type="text"
-                  placeholder={user ? user.username : "..."}
                   className="userUpdateInput"
                   onChange={handleChange}
+                  defaultValue={user ? user.username : "..."}
                   name="username"
                 />
               </div>
@@ -155,9 +155,9 @@ const User = () => {
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder={user ? user.email : "..."}
                   className="userUpdateInput"
                   onChange={handleChange}
+                  defaultValue={user ? user.email : "..."}
                   name="email"
                 />
               </div>
@@ -166,9 +166,9 @@ const User = () => {
                 <label>Mật khẩu</label>
                 <input
                   type="text"
-                  placeholder={user ? user.originalTPassword : "..."}
                   className="userUpdateInput"
                   onChange={handleChange}
+                  defaultValue={user ? user.originalTPassword : "..."}
                   name="password"
                 />
               </div>

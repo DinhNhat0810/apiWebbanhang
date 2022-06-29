@@ -5,7 +5,9 @@ import {
   deleteOrderStart, 
   deleteOrderFailure, 
   deleteOrderSuccess, 
-  
+  updateOrderStart, 
+  updateOrderFailure, 
+  updateOrderSuccess,
 } from "./OrderActions"
 import axios from 'axios'
 
@@ -39,6 +41,23 @@ export const deleteOrder = async (id, dispatch) => {
     dispatch(deleteOrderSuccess(id))
   } catch (err) {
     dispatch(deleteOrderFailure())
+  }
+}
+
+//UPDATE product
+export const updateOrder = async (id, orderUpdate, dispatch) => {
+  dispatch(updateOrderStart())
+  try {
+    const res = await axios.put("/orders/" + id, orderUpdate , {
+      headers: {
+        token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      },
+    })
+    alert('Đã cập nhật thành công!')
+    dispatch(updateOrderSuccess(res.data.payload))
+
+  } catch (err) {
+    dispatch(updateOrderFailure())
   }
 }
 

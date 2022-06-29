@@ -26,6 +26,21 @@ export const deleteOrderFailure = () => ({
   type: "DELETE_ORDER_FAILURE",
 })
 
+//UPDATE product
+export const updateOrderStart = () => ({
+  type: "UPDATE_ORDER_START",
+})
+
+export const updateOrderSuccess = (order) => ({
+  type: "UPDATE_ORDER_SUCCESS",
+  payload: order,
+})
+
+export const updateOrderFailure = () => ({
+  type: "UPDATE_ORDER_FAILURE",
+})
+
+
 
 
 

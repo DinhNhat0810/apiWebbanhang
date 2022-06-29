@@ -27,7 +27,7 @@ router.put("/:id", verify, async (req, res) => {
   }
 });
 
-//DELTE
+//DELETE
 router.delete("/:id", verify, async (req, res) => {
   if (req.user.id === req.params.id || req.user.isAdmin) {
     try {

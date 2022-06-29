@@ -14,6 +14,7 @@ import Login from "./pages/login/Login"
 import { AuthContext } from './context/authContext/AuthContext'
 import { useContext } from 'react'
 import OrderList from "./pages/orderList/OrderList"
+import Order from "./pages/order/Order"
 
 const App = () => {
 
@@ -55,6 +56,9 @@ const App = () => {
                                 </Route>
                                 <Route path="/orders">
                                     <OrderList/>
+                                </Route>
+                                <Route path="/order/:orderId">
+                                    <Order/>
                                 </Route>
                         </div>
                     </div>

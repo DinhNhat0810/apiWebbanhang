@@ -1,7 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import { Link } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search'
 import { useContext, useEffect, useState } from 'react'
 import { ProductContext } from '../../context/productContext/ProductContext'
 import { getProducts, deleteProduct } from '../../context/productContext/apiCalls'
@@ -47,7 +46,7 @@ const ProductList = () => {
           renderCell: (params) => {
             return (
               <>
-                <span>${params.row.price}</span>
+                <span>{params.row.price} vnđ</span>
               </>
             )
           }
