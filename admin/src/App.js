@@ -15,6 +15,8 @@ import { AuthContext } from './context/authContext/AuthContext'
 import { useContext } from 'react'
 import OrderList from "./pages/orderList/OrderList"
 import Order from "./pages/order/Order"
+import BlogList from "./pages/blogList/BlogList"
+import Blog from "./pages/blog/Blog"
 
 const App = () => {
 
@@ -59,6 +61,12 @@ const App = () => {
                                 </Route>
                                 <Route path="/order/:orderId">
                                     <Order/>
+                                </Route>
+                                <Route path="/blogs">
+                                    <BlogList/>
+                                </Route>
+                                <Route path="/blog/:blogId">
+                                    <Blog/>
                                 </Route>
                         </div>
                     </div>

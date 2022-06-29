@@ -2,7 +2,7 @@ import LineStyleIcon from "@mui/icons-material/LineStyle";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import { Link } from "react-router-dom";
 
 import "./sidebar.scss";
@@ -42,6 +42,12 @@ const Sidebar = () => {
               <li className="sidebarListItem">
                 <AttachMoneyIcon className="sidebarIcon" />
                 Danh sách đơn hàng
+              </li>
+            </Link>
+            <Link to="/blogs" className="link">
+              <li className="sidebarListItem">
+                <NewspaperIcon className="sidebarIcon" />
+                Danh sách bài viết
               </li>
             </Link>
             <Link to="/newProduct" className="link">
